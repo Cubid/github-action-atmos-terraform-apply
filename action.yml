@@ -363,6 +363,7 @@ runs:
           apply -- \
             atmos terraform plan ${{ inputs.component }} \
             --stack ${{ inputs.stack }} \
+            -out="${{ steps.vars.outputs.plan_file }}" \
             -input=false \
             -no-color \
         &> ${TERRAFORM_PLAN_OUTPUT_FILE}
