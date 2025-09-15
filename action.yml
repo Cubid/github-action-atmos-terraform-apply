@@ -369,6 +369,7 @@ runs:
 
         PLAN_CHANGED=$?
 
+        set -e
         cat ${TERRAFORM_PLAN_OUTPUT_FILE}
 
         if [[ "${PLAN_CHANGED}" != "0" ]]; then
@@ -376,10 +377,15 @@ runs:
           cat ./atmos-apply-summary.md >> $GITHUB_STEP_SUMMARY
           exit 1
         fi
-
+        
+        echo PLAN_FILE = ${{ steps.vars.outputs.PLAN_FILE }}
+        echo plan_file = ${{ steps.vars.outputs.plan_file }}
+        
+        echo cp ${{ steps.vars.outputs.plan_file }} ${{ steps.vars.outputs.renewed_plan_file }}
         cp ${{ steps.vars.outputs.plan_file }} ${{ steps.vars.outputs.renewed_plan_file }}
         
         echo checking steps.vars.outputs.renewed_plan_file
+        echo ls ${{ steps.vars.outputs.renewed_plan_file }}
         ls ${{ steps.vars.outputs.renewed_plan_file }}
 
         TERRAFORM_PLAN_DIFF_OUTPUT_FILE="./terraform-${GITHUB_RUN_ID}-plan-diff-output.txt"
