@@ -14,7 +14,7 @@ inputs:
   sha:
     description: "Commit SHA to apply. Default: github.sha"
     required: true
-    default: "${{ github.event.pull_request.head.sha }}"
+    default: "${{ github.event.pull_request.head.sha || github.sha }}"
   skip-checkout:
     description: "Disable actions/checkout. Useful for when the checkout happens in a previous step and file are modified outside of git through other actions"
     required: false
