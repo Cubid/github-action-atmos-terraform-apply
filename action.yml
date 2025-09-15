@@ -378,6 +378,9 @@ runs:
         fi
 
         cp ${{ steps.vars.outputs.plan_file }} ${{ steps.vars.outputs.renewed_plan_file }}
+        
+        echo checking steps.vars.outputs.renewed_plan_file
+        ls ${{ steps.vars.outputs.renewed_plan_file }}
 
         TERRAFORM_PLAN_DIFF_OUTPUT_FILE="./terraform-${GITHUB_RUN_ID}-plan-diff-output.txt"
 
@@ -429,6 +432,11 @@ runs:
       shell: bash
       working-directory: ${{ steps.vars.outputs.component_path }}
       run: |
+        
+        
+        echo checking again steps.vars.outputs.renewed_plan_file
+        ls ${{ steps.vars.outputs.renewed_plan_file }}
+        
         ${{ fromJson(steps.atmos-settings.outputs.settings).command }} show -json "${{ steps.vars.outputs.renewed_plan_file }}" > "${{ steps.vars.outputs.plan_file }}.json"
 
     - name: Generate Infracost Diff
